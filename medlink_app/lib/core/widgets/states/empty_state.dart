@@ -32,7 +32,7 @@ class EmptyState extends StatelessWidget {
             const SizedBox(height: AppTokens.space16),
             Text(
               title,
-              style: AppTypography.titleMedium,
+              style: AppTypography.h5,
               textAlign: TextAlign.center,
             ),
             if (description != null) ...[

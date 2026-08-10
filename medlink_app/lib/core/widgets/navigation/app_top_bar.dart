@@ -19,7 +19,7 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title, style: AppTypography.titleMedium),
+      title: Text(title, style: AppTypography.h5),
       centerTitle: false,
       backgroundColor: AppColors.surface,
       elevation: 0,
@@ -33,7 +33,7 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
     );
   }
-  @override
-Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
 
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}

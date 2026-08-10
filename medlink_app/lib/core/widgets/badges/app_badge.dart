@@ -20,13 +20,13 @@ class AppBadge extends StatelessWidget {
   ({Color bg, Color fg}) _colorsFor(BadgeVariant v) {
     switch (v) {
       case BadgeVariant.success:
-        return (bg: AppColors.successBg, fg: AppColors.success);
+        return (bg: AppColors.successLight, fg: AppColors.success);
       case BadgeVariant.warning:
-        return (bg: AppColors.warningBg, fg: AppColors.warning);
+        return (bg: AppColors.warningLight, fg: AppColors.warning);
       case BadgeVariant.error:
-        return (bg: AppColors.errorBg, fg: AppColors.error);
+        return (bg: AppColors.errorLight, fg: AppColors.error);
       case BadgeVariant.info:
-        return (bg: AppColors.infoBg, fg: AppColors.info);
+        return (bg: AppColors.infoLight, fg: AppColors.info);
       case BadgeVariant.neutral:
         return (bg: AppColors.gray100, fg: AppColors.textSecondary);
     }

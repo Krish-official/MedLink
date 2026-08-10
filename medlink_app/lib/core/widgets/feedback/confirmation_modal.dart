@@ -54,7 +54,7 @@ class ConfirmationModal extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: AppTypography.titleMedium),
+            Text(title, style: AppTypography.h5),
             const SizedBox(height: AppTokens.space8),
             Text(
               message,
