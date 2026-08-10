@@ -6,7 +6,10 @@ part 'env.g.dart';
 abstract class Env {
   @EnviedField(varName: 'API_BASE_URL')
   static const String apiBaseUrl = _Env.apiBaseUrl;
-
-  @EnviedField(varName: 'FIREBASE_API_KEY')
-  static const String firebaseApiKey = _Env.firebaseApiKey;
-}  
+  
+  @EnviedField(varName: 'API_TIMEOUT')
+  static const int apiTimeout = _Env.apiTimeout;
+  
+  @EnviedField(varName: 'ENABLE_LOGGING', defaultValue: true)
+  static const bool enableLogging = _Env.enableLogging;
+}
