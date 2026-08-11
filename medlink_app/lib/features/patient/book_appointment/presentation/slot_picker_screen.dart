@@ -10,6 +10,7 @@ import '../../../../core/widgets/states/empty_state.dart';
 import '../../../../core/widgets/states/error_state.dart';
 import '../../../../core/widgets/states/loading_state.dart';
 import '../../../shared/domain/entities/appointment.dart';
+import '../../../shared/domain/entities/doctor.dart';
 import '../../../shared/domain/entities/time_slot.dart';
 import 'providers.dart';
 

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../../../core/theme/colors.dart';
-import '../../../../../core/theme/tokens.dart';
-import '../../../../../core/theme/typography.dart';
-import '../../../../../core/widgets/badges/status_badge.dart';
-import '../../../../shared/domain/entities/appointment.dart';
+import '../../../shared/domain/entities/doctor.dart';
+import '../../../../core/theme/colors.dart';
+import '../../../../core/theme/tokens.dart';
+import '../../../../core/theme/typography.dart';
+import '../../../../core/widgets/badges/status_badge.dart';
+import '../../../shared/domain/entities/appointment.dart';
 
 class AppointmentCard extends StatelessWidget {
   final Appointment appointment;

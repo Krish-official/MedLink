@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../../../../core/network/dio_client.dart';
-import '../../../../shared/domain/entities/doctor.dart';
-import '../../../../shared/domain/entities/time_slot.dart';
-import '../../../../shared/domain/entities/appointment.dart';
+import '../../../shared/domain/entities/doctor.dart';
+import '../../../shared/domain/entities/time_slot.dart';
+import '../../../shared/domain/entities/appointment.dart';
 import '../data/repository_impl/booking_repository_impl.dart';
 import '../domain/repository/booking_repository.dart';
 import '../data/models/booking_request_dto.dart';

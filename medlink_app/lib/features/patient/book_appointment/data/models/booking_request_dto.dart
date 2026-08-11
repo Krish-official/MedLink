@@ -4,7 +4,7 @@ part 'booking_request_dto.freezed.dart';
 part 'booking_request_dto.g.dart';
 
 @freezed
-class BookingRequestDto with _$BookingRequestDto {
+abstract class BookingRequestDto with _$BookingRequestDto {
   const factory BookingRequestDto({
     required String doctorId,
     required String timeSlotId,

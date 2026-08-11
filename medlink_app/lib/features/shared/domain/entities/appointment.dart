@@ -21,7 +21,7 @@ enum AppointmentType {
 }
 
 @freezed
-class Appointment with _$Appointment {
+abstract class Appointment with _$Appointment {
   const factory Appointment({
     required String id,
     required String patientId,

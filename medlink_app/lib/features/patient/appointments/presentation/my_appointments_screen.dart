@@ -8,7 +8,7 @@ import '../../../../core/widgets/states/error_state.dart';
 import '../../../../core/widgets/states/loading_state.dart';
 import '../../../shared/domain/entities/appointment.dart';
 import 'providers.dart';
-import 'widgets/appointment_card.dart';
+import 'appointment_card.dart';
 
 class MyAppointmentsScreen extends ConsumerWidget {
   const MyAppointmentsScreen({super.key});

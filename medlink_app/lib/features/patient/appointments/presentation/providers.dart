@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import '../../../../core/network/dio_client.dart';
-import '../../../../shared/domain/entities/appointment.dart';
+import '../../../shared/domain/entities/appointment.dart';
 import '../data/repository_impl/patient_appointments_repository_impl.dart';
 import '../domain/repository/patient_appointments_repository.dart';
 

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import '../../../shared/domain/entities/appointment.dart';
+import '../../../shared/domain/entities/doctor.dart';
 import '../../../../core/theme/colors.dart';
 import '../../../../core/theme/tokens.dart';
 import '../../../../core/theme/typography.dart';
