@@ -27,4 +27,10 @@ class Routes {
   // Public
   static const String landing = '/';
   static const String doctorDirectory = '/doctors';
+
+    // Patient Book Appointment
+  static const String patientBookAppointmentSearch = '/patient/book-appointment';
+  static const String patientBookAppointmentSlots = '/patient/book-appointment/slots';
+  static const String patientBookAppointmentConfirm = '/patient/book-appointment/confirm';
+  static const String patientBookAppointmentSuccess = '/patient/book-appointment/success';
 }

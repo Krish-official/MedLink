@@ -7,6 +7,14 @@ import '../../features/auth/presentation/widgets/login_screen.dart';
 import '../../features/auth/presentation/widgets/register_screen.dart';
 import '../../features/auth/presentation/widgets/providers.dart';
 import 'routes.dart';
+import '../../features/patient/book_appointment/presentation/doctor_search_screen.dart';
+import '../../features/patient/book_appointment/presentation/slot_picker_screen.dart';
+import '../../features/patient/book_appointment/presentation/booking_confirmation_screen.dart';
+import '../../features/patient/book_appointment/presentation/booking_success_screen.dart';
+import '../../features/patient/appointments/presentation/my_appointments_screen.dart';
+
+
+
 
 // Placeholder screens (will be built in later phases)
 class PatientDashboardScreen extends StatelessWidget {
@@ -92,10 +100,30 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
 
       // Patient Routes
-      GoRoute(
-        path: Routes.patientDashboard,
-        builder: (context, state) => const PatientDashboardScreen(),
-      ),
+GoRoute(
+  path: Routes.patientDashboard,
+  builder: (context, state) => const PatientDashboardScreen(),
+),
+GoRoute(
+  path: '/patient/book-appointment',
+  builder: (context, state) => const DoctorSearchScreen(),
+),
+GoRoute(
+  path: '/patient/book-appointment/slots',
+  builder: (context, state) => const SlotPickerScreen(),
+),
+GoRoute(
+  path: '/patient/book-appointment/confirm',
+  builder: (context, state) => const BookingConfirmationScreen(),
+),
+GoRoute(
+  path: '/patient/book-appointment/success',
+  builder: (context, state) => const BookingSuccessScreen(),
+),
+GoRoute(
+  path: Routes.patientAppointments,
+  builder: (context, state) => const MyAppointmentsScreen(),
+),
 
       // Doctor Routes
       GoRoute(
