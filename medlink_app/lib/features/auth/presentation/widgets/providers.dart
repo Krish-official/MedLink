@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../../../core/network/dio_client.dart';
-import '../domain/entities/user.dart';
-import '../domain/repository/auth_repository.dart';
-import '../data/repository_impl/auth_repository_impl.dart';
-import '../data/datasources/auth_local_datasource.dart';
-import '../data/datasources/auth_remote_datasource.dart';
+import '../../../../core/network/dio_client.dart';
+import '../../domain/entities/user.dart';
+import '../../domain/repository/auth_repository.dart';
+import '../../data/repository_impl/auth_repository_impl.dart';
+import '../../data/datasources/auth_local_datasource.dart';
+import '../../data/datasources/auth_remote_datasource.dart';
 
 // ══════════════════════════════════════════════════════
 // DATASOURCE PROVIDERS

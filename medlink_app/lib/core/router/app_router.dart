@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/domain/entities/user.dart';
-import '../../features/auth/presentation/login_screen.dart';
-import '../../features/auth/presentation/register_screen.dart';
-import '../../features/auth/presentation/providers.dart';
+import '../../features/auth/presentation/widgets/login_screen.dart';
+import '../../features/auth/presentation/widgets/register_screen.dart';
+import '../../features/auth/presentation/widgets/providers.dart';
 import 'routes.dart';
 
 // Placeholder screens (will be built in later phases)

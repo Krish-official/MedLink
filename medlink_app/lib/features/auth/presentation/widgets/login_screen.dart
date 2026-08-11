@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../core/theme/colors.dart';
-import '../../../core/theme/tokens.dart';
-import '../../../core/theme/typography.dart';
-import '../../../core/widgets/buttons/primary_button.dart';
-import '../../../core/widgets/buttons/secondary_button.dart';
+import '../../../../core/theme/colors.dart';
+import '../../../../core/theme/tokens.dart';
+import '../../../../core/theme/typography.dart';
+import '../../../../core/widgets/buttons/primary_button.dart';
+import '../../../../core/widgets/buttons/secondary_button.dart';
 import 'providers.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {

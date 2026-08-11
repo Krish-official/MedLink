@@ -50,7 +50,7 @@ class AppTheme {
       // ══════════════════════════════════════
       // CARD
       // ══════════════════════════════════════
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: AppTokens.elevationSm,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppTokens.radiusMd),
