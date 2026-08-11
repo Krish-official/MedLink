@@ -4,20 +4,14 @@ import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 import '../buttons/primary_button.dart';
 
-class EmptyState extends StatelessWidget {
-  final IconData icon;
-  final String title;
+class ErrorState extends StatelessWidget {
   final String message;
-  final String? actionLabel;
-  final VoidCallback? onAction;
+  final VoidCallback? onRetry;
 
-  const EmptyState({
+  const ErrorState({
     super.key,
-    required this.icon,
-    required this.title,
     required this.message,
-    this.actionLabel,
-    this.onAction,
+    this.onRetry,
   });
 
   @override
@@ -29,13 +23,13 @@ class EmptyState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              icon,
+              Icons.error_outline,
               size: 80,
-              color: AppColors.gray300,
+              color: AppColors.error,
             ),
             const SizedBox(height: AppTokens.space24),
             Text(
-              title,
+              'Oops! Something went wrong',
               style: AppTypography.h5,
               textAlign: TextAlign.center,
             ),
@@ -47,11 +41,12 @@ class EmptyState extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            if (actionLabel != null && onAction != null) ...[
+            if (onRetry != null) ...[
               const SizedBox(height: AppTokens.space24),
               PrimaryButton(
-                label: actionLabel!,
-                onPressed: onAction,
+                label: 'Try Again',
+                onPressed: onRetry,
+                icon: Icons.refresh,
               ),
             ],
           ],
