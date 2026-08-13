@@ -33,4 +33,11 @@ class Routes {
   static const String patientBookAppointmentSlots = '/patient/book-appointment/slots';
   static const String patientBookAppointmentConfirm = '/patient/book-appointment/confirm';
   static const String patientBookAppointmentSuccess = '/patient/book-appointment/success';
+
+  // Doctor
+  static const String doctorSchedule = '/doctor/schedule';
+  static const String doctorPatients = '/doctor/patients';
+  static String doctorPatientProfile(String id) => '/doctor/patients/$id';
+  static const String doctorPrescriptions = '/doctor/prescriptions';
+  static const String doctorReports = '/doctor/reports';
 }

@@ -12,7 +12,11 @@ import '../../features/patient/book_appointment/presentation/slot_picker_screen.
 import '../../features/patient/book_appointment/presentation/booking_confirmation_screen.dart';
 import '../../features/patient/book_appointment/presentation/booking_success_screen.dart';
 import '../../features/patient/appointments/presentation/my_appointments_screen.dart';
-
+import '../../features/doctor/dashboard/presentation/doctor_dashboard_screen.dart';
+import '../../features/doctor/schedule/presentation/schedule_calendar_screen.dart';
+import '../../features/doctor/patients/presentation/patient_list_screen.dart';
+import '../../features/doctor/patients/presentation/patient_profile_screen.dart';
+import '../../features/doctor/prescriptions/presentation/prescription_editor_screen.dart';
 
 
 
@@ -130,7 +134,32 @@ GoRoute(
         path: Routes.doctorDashboard,
         builder: (context, state) => const DoctorDashboardScreen(),
       ),
-
+      GoRoute(
+  path: Routes.doctorSchedule,
+  builder: (context, state) => const ScheduleCalendarScreen(),
+),
+GoRoute(
+  path: Routes.doctorPatients,
+  builder: (context, state) => const PatientListScreen(),
+),
+GoRoute(
+  path: '/doctor/patients/:id',
+  builder: (context, state) {
+    final patientId = state.pathParameters['id']!;
+    return PatientProfileScreen(patientId: patientId);
+  },
+),
+GoRoute(
+  path: '/doctor/prescriptions/new',
+  builder: (context, state) {
+    final patientId = state.uri.queryParameters['patientId']!;
+    final patientName = state.uri.queryParameters['patientName'];
+    return PrescriptionEditorScreen(
+      patientId: patientId,
+      patientName: patientName,
+    );
+  },
+),
       // Admin Routes
       GoRoute(
         path: Routes.adminDashboard,
