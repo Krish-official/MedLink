@@ -7,7 +7,7 @@ import '../../domain/repository/auth_repository.dart';
 import '../../data/repository_impl/auth_repository_impl.dart';
 import '../../data/datasources/auth_local_datasource.dart';
 import '../../data/datasources/auth_remote_datasource.dart';
-
+import '../../data/repository_impl/mock_auth_repository.dart';
 // ══════════════════════════════════════════════════════
 // DATASOURCE PROVIDERS
 // ══════════════════════════════════════════════════════
@@ -29,10 +29,7 @@ final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
 // ══════════════════════════════════════════════════════
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepositoryImpl(
-    ref.watch(authRemoteDataSourceProvider),
-    ref.watch(authLocalDataSourceProvider),
-  );
+  return MockAuthRepository();
 });
 
 // ══════════════════════════════════════════════════════

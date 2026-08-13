@@ -4,7 +4,7 @@ part 'patient_summary.freezed.dart';
 part 'patient_summary.g.dart';
 
 @freezed
-class PatientSummary with _$PatientSummary {
+abstract class PatientSummary with _$PatientSummary {
   const factory PatientSummary({
     required String id,
     required String firstName,

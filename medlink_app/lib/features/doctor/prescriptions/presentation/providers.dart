@@ -3,6 +3,7 @@ import '../../../../core/network/dio_client.dart';
 import '../domain/entities/prescription.dart';
 import '../data/repository_impl/prescription_repository_impl.dart';
 import '../domain/repository/prescription_repository.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 // Repository Provider
 final prescriptionRepositoryProvider = Provider<PrescriptionRepository>((ref) {

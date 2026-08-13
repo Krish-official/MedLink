@@ -5,7 +5,7 @@ part 'doctor_dashboard_dto.freezed.dart';
 part 'doctor_dashboard_dto.g.dart';
 
 @freezed
-class DoctorDashboardDto with _$DoctorDashboardDto {
+abstract class DoctorDashboardDto with _$DoctorDashboardDto {
   const factory DoctorDashboardDto({
     @Default([]) List<Appointment> todayAppointments,
     @Default(0) int totalPatientsToday,

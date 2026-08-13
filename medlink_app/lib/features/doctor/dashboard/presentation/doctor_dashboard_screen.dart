@@ -8,7 +8,7 @@ import '../../../../core/router/routes.dart';
 import '../../../../core/widgets/states/empty_state.dart';
 import '../../../../core/widgets/states/error_state.dart';
 import '../../../../core/widgets/states/loading_state.dart';
-import '../../../auth/presentation/providers.dart';
+import '../../../auth/presentation/widgets/providers.dart';
 import 'providers.dart';
 import 'widgets/todays_queue_widget.dart';
 import 'widgets/stats_summary.dart';

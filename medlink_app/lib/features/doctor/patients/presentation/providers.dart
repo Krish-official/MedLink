@@ -3,6 +3,7 @@ import '../../../../core/network/dio_client.dart';
 import '../domain/entities/patient_summary.dart';
 import '../data/repository_impl/doctor_patients_repository_impl.dart';
 import '../domain/repository/doctor_patients_repository.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 // Repository Provider
 final doctorPatientsRepositoryProvider = Provider<DoctorPatientsRepository>((ref) {

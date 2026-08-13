@@ -9,6 +9,7 @@ import '../../../../core/widgets/buttons/primary_button.dart';
 import '../../../../core/widgets/states/loading_state.dart';
 import '../../../../core/widgets/states/error_state.dart';
 import 'providers.dart';
+import '../domain/entities/availability_slot.dart';
 
 class ScheduleCalendarScreen extends ConsumerWidget {
   const ScheduleCalendarScreen({super.key});

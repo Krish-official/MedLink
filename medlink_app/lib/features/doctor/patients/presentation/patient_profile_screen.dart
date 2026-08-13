@@ -7,6 +7,7 @@ import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/states/loading_state.dart';
 import '../../../../core/widgets/states/error_state.dart';
 import 'providers.dart';
+import '../domain/entities/patient_summary.dart';
 
 class PatientProfileScreen extends ConsumerWidget {
   final String patientId;
@@ -460,7 +461,7 @@ class _VitalCard extends StatelessWidget {
                   )),
                   const SizedBox(height: AppTokens.space4),
                   Row(
-                    baseline: TextBaseline.alphabetic,
+                    textBaseline: TextBaseline.alphabetic,
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       Text(value, style: AppTypography.h4),

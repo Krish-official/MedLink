@@ -14,7 +14,7 @@ enum DayOfWeek {
 }
 
 @freezed
-class AvailabilitySlot with _$AvailabilitySlot {
+abstract class AvailabilitySlot with _$AvailabilitySlot {
   const factory AvailabilitySlot({
     required String id,
     required String doctorId,

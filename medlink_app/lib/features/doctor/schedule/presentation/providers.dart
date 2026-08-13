@@ -4,6 +4,7 @@ import '../domain/entities/availability_slot.dart';
 import '../domain/entities/holiday.dart';
 import '../data/repository_impl/schedule_repository_impl.dart';
 import '../domain/repository/schedule_repository.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 // Repository Provider
 final scheduleRepositoryProvider = Provider<ScheduleRepository>((ref) {

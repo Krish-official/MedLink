@@ -4,7 +4,7 @@ part 'prescription.freezed.dart';
 part 'prescription.g.dart';
 
 @freezed
-class Prescription with _$Prescription {
+abstract class Prescription with _$Prescription {
   const factory Prescription({
     required String id,
     required String patientId,
@@ -25,7 +25,7 @@ class Prescription with _$Prescription {
 }
 
 @freezed
-class Medication with _$Medication {
+abstract class Medication with _$Medication {
   const factory Medication({
     required String name,
     required String dosage,
