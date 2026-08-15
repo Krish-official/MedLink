@@ -10,6 +10,7 @@ import { errorHandler } from './middlewares/error.middleware';
 import authRoutes from './routes/auth.routes';
 import patientRoutes from './routes/patient.routes';
 import bookingRoutes from './routes/booking.routes';
+import doctorRoutes from './routes/doctor.routes';
 
 dotenv.config();
 
@@ -49,6 +50,7 @@ app.get('/', (req: Request, res: Response) => {
     endpoints: {
       auth: '/api/v1/auth',
       patient: '/api/v1/patient',
+      doctor: '/api/v1/doctor',
       doctors: '/api/v1/doctors',
       appointments: '/api/v1/appointments',
     },
@@ -68,8 +70,8 @@ app.get('/health', (req: Request, res: Response) => {
 const API_PREFIX = '/api/v1';
 app.use(`${API_PREFIX}/auth`, authRoutes);
 app.use(`${API_PREFIX}/patient`, patientRoutes);
+app.use(`${API_PREFIX}/doctor`, doctorRoutes);
 app.use(`${API_PREFIX}/doctors`, bookingRoutes);
-// Note: Booking routes handle both /doctors and /appointments paths
 
 // ═══════════════════════════════════════════════════════════
 // ERROR HANDLING
