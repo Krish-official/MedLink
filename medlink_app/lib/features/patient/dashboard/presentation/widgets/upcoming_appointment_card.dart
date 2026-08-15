@@ -5,6 +5,7 @@ import '../../../../../core/theme/tokens.dart';
 import '../../../../../core/theme/typography.dart';
 import '../../../../../core/widgets/badges/status_badge.dart';
 import '../../../../shared/domain/entities/appointment.dart';
+import '../../../../shared/domain/entities/doctor.dart';
 
 class UpcomingAppointmentCard extends StatelessWidget {
   final Appointment appointment;

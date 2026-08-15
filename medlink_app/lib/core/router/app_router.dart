@@ -17,20 +17,11 @@ import '../../features/doctor/schedule/presentation/schedule_calendar_screen.dar
 import '../../features/doctor/patients/presentation/patient_list_screen.dart';
 import '../../features/doctor/patients/presentation/patient_profile_screen.dart';
 import '../../features/doctor/prescriptions/presentation/prescription_editor_screen.dart';
-
+import '../../features/patient/dashboard/presentation/patient_dashboard_screen.dart';
 
 
 // Placeholder screens (will be built in later phases)
-class PatientDashboardScreen extends StatelessWidget {
-  const PatientDashboardScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Patient Dashboard')),
-      body: const Center(child: Text('Patient Dashboard')),
-    );
-  }
-}
+
 
 class DoctorDashboardScreen extends StatelessWidget {
   const DoctorDashboardScreen({super.key});

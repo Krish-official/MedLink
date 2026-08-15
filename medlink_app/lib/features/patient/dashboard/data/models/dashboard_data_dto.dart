@@ -5,7 +5,7 @@ part 'dashboard_data_dto.freezed.dart';
 part 'dashboard_data_dto.g.dart';
 
 @freezed
-class DashboardDataDto with _$DashboardDataDto {
+abstract class DashboardDataDto with _$DashboardDataDto {
   const factory DashboardDataDto({
     Appointment? upcomingAppointment,
     @Default(0) int totalAppointments,
