@@ -6,6 +6,9 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { errorHandler } from './middlewares/error.middleware';
 
+// Import routes
+import authRoutes from './routes/auth.routes';
+
 dotenv.config();
 
 const app: Application = express();
@@ -14,25 +17,17 @@ const app: Application = express();
 // MIDDLEWARES
 // ═══════════════════════════════════════════════════════════
 
-// Security
 app.use(helmet());
-
-// CORS
 app.use(
   cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true,
   })
 );
-
-// Body parser
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// Compression
 app.use(compression());
 
-// Logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 } else {
@@ -61,16 +56,14 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
-// API Routes will be added here
-// app.use('/api/v1/auth', authRoutes);
-// app.use('/api/v1/patient', patientRoutes);
-// etc.
+// API Routes
+const API_PREFIX = '/api/v1';
+app.use(`${API_PREFIX}/auth`, authRoutes);
 
 // ═══════════════════════════════════════════════════════════
 // ERROR HANDLING
 // ═══════════════════════════════════════════════════════════
 
-// 404 handler
 app.use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,
@@ -78,7 +71,6 @@ app.use((req: Request, res: Response) => {
   });
 });
 
-// Global error handler
 app.use(errorHandler);
 
 export default app;
