@@ -1,0 +1,384 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ═══════════════════════════════════════════════════════════
+// USER & AUTHENTICATION
+// ═══════════════════════════════════════════════════════════
+
+enum UserRole {
+  PATIENT
+  DOCTOR
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+model User {
+  id                String    @id @default(uuid())
+  email             String    @unique
+  password          String
+  role              UserRole
+  firstName         String
+  lastName          String
+  phone             String?
+  avatar            String?
+  dateOfBirth       DateTime?
+  gender            Gender?
+  isVerified        Boolean   @default(false)
+  isActive          Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  refreshTokens     RefreshToken[]
+  patient           Patient?
+  doctor            Doctor?
+  admin             Admin?
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+// ═══════════════════════════════════════════════════════════
+// PATIENT
+// ═══════════════════════════════════════════════════════════
+
+model Patient {
+  id              String    @id @default(uuid())
+  userId          String    @unique
+  bloodGroup      String?
+  allergies       String[]
+  chronicDiseases String[]
+  emergencyContact Json?    // { name, phone, relationship }
+  address         String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  appointments    Appointment[]
+  medicalRecords  MedicalRecord[]
+  prescriptions   Prescription[]
+  emergencyAlerts EmergencyAlert[]
+  vitals          VitalRecord[]
+
+  @@map("patients")
+}
+
+// ═══════════════════════════════════════════════════════════
+// DOCTOR
+// ═══════════════════════════════════════════════════════════
+
+model Doctor {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  specialty         String
+  qualifications    String
+  experienceYears   Int
+  consultationFee   Int      @default(500)
+  clinicAddress     String?
+  bio               String?
+  rating            Float    @default(0)
+  reviewCount       Int      @default(0)
+  isAvailable       Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  appointments      Appointment[]
+  availabilitySlots AvailabilitySlot[]
+  holidays          Holiday[]
+  prescriptions     Prescription[]
+
+  @@map("doctors")
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════════════════════════
+
+model Admin {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("admins")
+}
+
+// ═══════════════════════════════════════════════════════════
+// APPOINTMENTS
+// ═══════════════════════════════════════════════════════════
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum AppointmentType {
+  CHECKUP
+  FOLLOW_UP
+  EMERGENCY
+  CONSULTATION
+}
+
+model Appointment {
+  id                 String            @id @default(uuid())
+  patientId          String
+  doctorId           String
+  timeSlotId         String?
+  scheduledAt        DateTime
+  status             AppointmentStatus @default(SCHEDULED)
+  type               AppointmentType   @default(CONSULTATION)
+  symptoms           String?
+  notes              String?
+  tokenNumber        Int?
+  queuePosition      Int?
+  prescriptionId     String?           @unique
+  completedAt        DateTime?
+  cancelledAt        DateTime?
+  cancellationReason String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  patient      Patient       @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctor       Doctor        @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  timeSlot     TimeSlot?     @relation(fields: [timeSlotId], references: [id])
+  prescription Prescription? @relation(fields: [prescriptionId], references: [id])
+
+  @@map("appointments")
+}
+
+// ═══════════════════════════════════════════════════════════
+// SCHEDULE & AVAILABILITY
+// ═══════════════════════════════════════════════════════════
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+model AvailabilitySlot {
+  id                 String    @id @default(uuid())
+  doctorId           String
+  dayOfWeek          DayOfWeek
+  startTime          String    // "09:00"
+  endTime            String    // "17:00"
+  slotDuration       Int       @default(30) // minutes
+  maxPatientsPerSlot Int       @default(5)
+  isActive           Boolean   @default(true)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  doctor    Doctor     @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  timeSlots TimeSlot[]
+
+  @@map("availability_slots")
+}
+
+model TimeSlot {
+  id                   String    @id @default(uuid())
+  availabilitySlotId   String
+  doctorId             String
+  startTime            DateTime
+  endTime              DateTime
+  isAvailable          Boolean   @default(true)
+  currentQueue         Int       @default(0)
+  maxQueue             Int       @default(5)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  availabilitySlot AvailabilitySlot @relation(fields: [availabilitySlotId], references: [id], onDelete: Cascade)
+  appointments     Appointment[]
+
+  @@map("time_slots")
+}
+
+model Holiday {
+  id          String   @id @default(uuid())
+  doctorId    String
+  date        DateTime
+  reason      String
+  isFullDay   Boolean  @default(true)
+  startTime   String?
+  endTime     String?
+  createdAt   DateTime @default(now())
+
+  doctor Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@map("holidays")
+}
+
+// ═══════════════════════════════════════════════════════════
+// PRESCRIPTIONS
+// ═══════════════════════════════════════════════════════════
+
+model Prescription {
+  id            String   @id @default(uuid())
+  patientId     String
+  doctorId      String
+  prescribedAt  DateTime @default(now())
+  diagnosis     String
+  notes         String?
+  followUpDate  String?
+  attachmentUrl String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  patient     Patient      @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctor      Doctor       @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  medications Medication[]
+  appointment Appointment?
+
+  @@map("prescriptions")
+}
+
+model Medication {
+  id             String  @id @default(uuid())
+  prescriptionId String
+  name           String
+  dosage         String
+  frequency      String
+  duration       String
+  instructions   String?
+  timing         String?
+
+  prescription Prescription @relation(fields: [prescriptionId], references: [id], onDelete: Cascade)
+
+  @@map("medications")
+}
+
+// ═══════════════════════════════════════════════════════════
+// MEDICAL RECORDS
+// ═══════════════════════════════════════════════════════════
+
+enum RecordType {
+  LAB_REPORT
+  IMAGING
+  DOCUMENT
+  PRESCRIPTION
+  DISCHARGE
+  OTHER
+}
+
+model MedicalRecord {
+  id          String     @id @default(uuid())
+  patientId   String
+  title       String
+  type        RecordType
+  description String?
+  fileUrl     String
+  fileType    String?
+  fileSize    Int?
+  uploadedBy  String?
+  recordDate  DateTime?
+  metadata    Json?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("medical_records")
+}
+
+// ═══════════════════════════════════════════════════════════
+// VITAL RECORDS
+// ═══════════════════════════════════════════════════════════
+
+model VitalRecord {
+  id                     String   @id @default(uuid())
+  patientId              String
+  recordedAt             DateTime @default(now())
+  bloodPressureSystolic  Float?
+  bloodPressureDiastolic Float?
+  heartRate              Float?
+  temperature            Float?
+  oxygenSaturation       Float?
+  weight                 Float?
+  height                 Float?
+  bmi                    Float?
+  notes                  String?
+  recordedBy             String?
+  createdAt              DateTime @default(now())
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("vital_records")
+}
+
+// ═══════════════════════════════════════════════════════════
+// EMERGENCY
+// ═══════════════════════════════════════════════════════════
+
+model EmergencyAlert {
+  id        String   @id @default(uuid())
+  patientId String
+  location  Json?    // { latitude, longitude, address }
+  message   String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  resolvedAt DateTime?
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("emergency_alerts")
+}
+
+// ═══════════════════════════════════════════════════════════
+// NOTIFICATIONS
+// ═══════════════════════════════════════════════════════════
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  body      String
+  data      Json?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
+}
+
+model FCMToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("fcm_tokens")
+}
