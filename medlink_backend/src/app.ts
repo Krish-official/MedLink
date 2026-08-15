@@ -11,6 +11,7 @@ import authRoutes from './routes/auth.routes';
 import patientRoutes from './routes/patient.routes';
 import bookingRoutes from './routes/booking.routes';
 import doctorRoutes from './routes/doctor.routes';
+import adminRoutes from './routes/admin.routes';
 
 dotenv.config();
 
@@ -44,14 +45,16 @@ if (process.env.NODE_ENV === 'development') {
 app.get('/', (req: Request, res: Response) => {
   res.json({
     success: true,
-    message: 'MedCare API',
-    version: process.env.API_VERSION || 'v1',
+    message: 'MedCare API - Healthcare Management System',
+    version: '1.0.0',
     timestamp: new Date().toISOString(),
+    documentation: 'https://github.com/Krish-official/MedLink',
     endpoints: {
       auth: '/api/v1/auth',
       patient: '/api/v1/patient',
       doctor: '/api/v1/doctor',
-      doctors: '/api/v1/doctors',
+      admin: '/api/v1/admin',
+      doctors: '/api/v1/doctors (public)',
       appointments: '/api/v1/appointments',
     },
   });
@@ -62,6 +65,7 @@ app.get('/health', (req: Request, res: Response) => {
     success: true,
     message: 'Server is healthy',
     uptime: process.uptime(),
+    memory: process.memoryUsage(),
     timestamp: new Date().toISOString(),
   });
 });
@@ -71,6 +75,7 @@ const API_PREFIX = '/api/v1';
 app.use(`${API_PREFIX}/auth`, authRoutes);
 app.use(`${API_PREFIX}/patient`, patientRoutes);
 app.use(`${API_PREFIX}/doctor`, doctorRoutes);
+app.use(`${API_PREFIX}/admin`, adminRoutes);
 app.use(`${API_PREFIX}/doctors`, bookingRoutes);
 
 // ═══════════════════════════════════════════════════════════
@@ -81,6 +86,7 @@ app.use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,
     message: 'Route not found',
+    path: req.path,
   });
 });
 
