@@ -21,6 +21,12 @@ import '../../features/patient/dashboard/presentation/patient_dashboard_screen.d
 import '../../features/patient/medical_records/presentation/medical_records_screen.dart';
 import '../../features/patient/emergency/presentation/emergency_screen.dart';
 import '../../features/doctor/reports/presentation/reports_dashboard_screen.dart';
+// Add these imports
+import '../../features/auth/presentation/forgot_password_screen.dart';
+import '../../features/patient/profile/presentation/patient_profile_screen.dart';
+
+// Add these routes to the routes list:
+
 
 // Placeholder screens (will be built in later phases)
 
@@ -138,7 +144,17 @@ GoRoute(
   path: Routes.patientAppointments,
   builder: (context, state) => const MyAppointmentsScreen(),
 ),
+// Auth - Forgot Password
+GoRoute(
+  path: Routes.forgotPassword,
+  builder: (context, state) => const ForgotPasswordScreen(),
+),
 
+// Patient - Profile
+GoRoute(
+  path: Routes.patientProfile,
+  builder: (context, state) => const PatientProfileScreen(),
+),
       // Doctor Routes
       GoRoute(
         path: Routes.doctorDashboard,

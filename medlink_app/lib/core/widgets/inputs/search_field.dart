@@ -33,21 +33,21 @@ class SearchField extends StatelessWidget {
       textInputAction: TextInputAction.search,
       style: AppTypography.bodyMedium,
       decoration: InputDecoration(
-        hintText: hintText ?? 'Search',
+        hintText: hintText ?? 'Search...',
         hintStyle: AppTypography.bodyMedium.copyWith(
           color: AppColors.textDisabled,
         ),
         prefixIcon: Icon(
           Icons.search,
-          size: AppTokens.iconSm,
           color: AppColors.textSecondary,
+          size: AppTokens.iconSm,
         ),
         suffixIcon: hasText
             ? IconButton(
                 icon: Icon(
-                  Icons.close,
-                  size: AppTokens.iconSm,
+                  Icons.clear,
                   color: AppColors.textSecondary,
+                  size: AppTokens.iconSm,
                 ),
                 onPressed: () {
                   controller?.clear();
@@ -57,22 +57,29 @@ class SearchField extends StatelessWidget {
               )
             : null,
         filled: true,
-        fillColor: AppColors.gray100,
+        fillColor: AppColors.gray50,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: AppTokens.space16,
           vertical: AppTokens.space12,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppTokens.radiusFull),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(AppTokens.radiusSm),
+          borderSide: const BorderSide(
+            color: AppColors.border,
+          ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppTokens.radiusFull),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(AppTokens.radiusSm),
+          borderSide: const BorderSide(
+            color: AppColors.border,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppTokens.radiusFull),
-          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+          borderRadius: BorderRadius.circular(AppTokens.radiusSm),
+          borderSide: const BorderSide(
+            color: AppColors.primary,
+            width: 2,
+          ),
         ),
       ),
     );
