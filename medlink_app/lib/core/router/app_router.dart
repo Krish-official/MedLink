@@ -18,7 +18,9 @@ import '../../features/doctor/patients/presentation/patient_list_screen.dart';
 import '../../features/doctor/patients/presentation/patient_profile_screen.dart';
 import '../../features/doctor/prescriptions/presentation/prescription_editor_screen.dart';
 import '../../features/patient/dashboard/presentation/patient_dashboard_screen.dart';
-
+import '../../features/patient/medical_records/presentation/medical_records_screen.dart';
+import '../../features/patient/emergency/presentation/emergency_screen.dart';
+import '../../features/doctor/reports/presentation/reports_dashboard_screen.dart';
 
 // Placeholder screens (will be built in later phases)
 
@@ -93,6 +95,23 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.register,
         builder: (context, state) => const RegisterScreen(),
       ),
+      // Patient - Medical Records
+GoRoute(
+  path: Routes.patientMedicalRecords,
+  builder: (context, state) => const MedicalRecordsScreen(),
+),
+
+// Patient - Emergency
+GoRoute(
+  path: Routes.patientEmergency,
+  builder: (context, state) => const EmergencyScreen(),
+),
+
+// Doctor - Reports
+GoRoute(
+  path: Routes.doctorReports,
+  builder: (context, state) => const ReportsDashboardScreen(),
+),
 
       // Patient Routes
 GoRoute(

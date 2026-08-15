@@ -9,6 +9,7 @@ class GhostButton extends StatelessWidget {
   final bool isLoading;
   final IconData? icon;
   final bool fullWidth;
+  final Color? color;
 
   const GhostButton({
     super.key,
@@ -17,29 +18,32 @@ class GhostButton extends StatelessWidget {
     this.isLoading = false,
     this.icon,
     this.fullWidth = false,
+    this.color,
   });
 
   @override
   Widget build(BuildContext context) {
+    final buttonColor = color ?? AppColors.primary;
+
     return SizedBox(
       width: fullWidth ? double.infinity : null,
       height: 48,
       child: TextButton(
         onPressed: isLoading ? null : onPressed,
         style: TextButton.styleFrom(
-          foregroundColor: AppColors.primary,
+          foregroundColor: buttonColor,
           disabledForegroundColor: AppColors.textDisabled,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppTokens.radiusSm),
           ),
         ),
         child: isLoading
-            ? const SizedBox(
+            ? SizedBox(
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  valueColor: AlwaysStoppedAnimation<Color>(buttonColor),
                 ),
               )
             : Row(
@@ -52,7 +56,7 @@ class GhostButton extends StatelessWidget {
                   Text(
                     label,
                     style: AppTypography.labelLarge.copyWith(
-                      color: AppColors.primary,
+                      color: buttonColor,
                     ),
                   ),
                 ],
