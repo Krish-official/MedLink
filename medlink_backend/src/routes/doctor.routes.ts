@@ -4,6 +4,10 @@ import { DoctorValidator } from '../validators/doctor.validator';
 import { validate } from '../middlewares/validate.middleware';
 import { authenticate } from '../middlewares/auth.middleware';
 import { authorize } from '../middlewares/role.middleware';
+import { Router } from 'express';
+import { BookingController } from '../controllers/booking.controller';
+import { BookingValidator } from '../validators/booking.validator';
+import { validate } from '../middlewares/validate.middleware';
 
 const router = Router();
 
@@ -287,5 +291,12 @@ router.post(
   validate,
   DoctorController.createOfflineBooking
 );
+
+
+// Public doctor directory
+router.get('/', BookingValidator.searchDoctors(), validate, BookingController.searchDoctors);
+router.get('/specialties', BookingController.getSpecialties);
+router.get('/slots', BookingValidator.getAvailableSlots(), validate, BookingController.getAvailableSlots);
+router.get('/:id', BookingValidator.getDoctorDetails(), validate, BookingController.getDoctorDetails);
 
 export default router;

@@ -13,6 +13,8 @@ import bookingRoutes from './routes/booking.routes';
 import doctorRoutes from './routes/doctor.routes';
 import adminRoutes from './routes/admin.routes';
 import uploadRoutes from './routes/upload.routes';
+import doctorsRoutes from './routes/doctor.routes';
+import appointmentsRoutes from './routes/appointments.routes';
 
 dotenv.config();
 
@@ -81,7 +83,8 @@ app.use(`${API_PREFIX}/auth`, authRoutes);
 app.use(`${API_PREFIX}/patient`, patientRoutes);
 app.use(`${API_PREFIX}/doctor`, doctorRoutes);
 app.use(`${API_PREFIX}/admin`, adminRoutes);
-app.use(`${API_PREFIX}/doctors`, bookingRoutes);
+app.use(`${API_PREFIX}/doctors`, doctorsRoutes);
+app.use(`${API_PREFIX}/appointments`, appointmentsRoutes);
 
 // ═══════════════════════════════════════════════════════════
 // ERROR HANDLING
