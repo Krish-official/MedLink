@@ -4,10 +4,6 @@ import { DoctorValidator } from '../validators/doctor.validator';
 import { validate } from '../middlewares/validate.middleware';
 import { authenticate } from '../middlewares/auth.middleware';
 import { authorize } from '../middlewares/role.middleware';
-import { Router } from 'express';
-import { BookingController } from '../controllers/booking.controller';
-import { BookingValidator } from '../validators/booking.validator';
-import { validate } from '../middlewares/validate.middleware';
 
 const router = Router();
 
@@ -292,11 +288,8 @@ router.post(
   DoctorController.createOfflineBooking
 );
 
-
-// Public doctor directory
-router.get('/', BookingValidator.searchDoctors(), validate, BookingController.searchDoctors);
-router.get('/specialties', BookingController.getSpecialties);
-router.get('/slots', BookingValidator.getAvailableSlots(), validate, BookingController.getAvailableSlots);
-router.get('/:id', BookingValidator.getDoctorDetails(), validate, BookingController.getDoctorDetails);
+// Note: the public doctor directory (search/specialties/slots/:id) lives in
+// booking.routes.ts, mounted separately at /api/v1/doctors (no auth required).
+// It must NOT live on this router, since everything above requires DOCTOR auth.
 
 export default router;

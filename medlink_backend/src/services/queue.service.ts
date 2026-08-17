@@ -1,4 +1,5 @@
 import prisma from '../config/database';
+import { safeUserSelect } from '../utils/prisma-select.util';
 
 function dayRange(date: Date) {
   const start = new Date(date);

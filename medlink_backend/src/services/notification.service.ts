@@ -32,7 +32,7 @@ export class NotificationService {
     body: string;
     data?: Record<string, string>;
   }) {
-    // store in DB
+    // Save in-app notification
     await this.createInAppNotification({
       userId: params.userId,
       title: params.title,
@@ -40,22 +40,42 @@ export class NotificationService {
       data: params.data,
     });
 
-    // send push
+    // Push notification (FCM)
     const messaging = firebaseMessaging();
     if (!messaging) return;
 
-    const tokens = await prisma.fCMToken.findMany({
+    const tokenRows = await prisma.fCMToken.findMany({
       where: { userId: params.userId },
       select: { token: true },
     });
 
-    const tokenList = tokens.map(t => t.token);
-    if (tokenList.length === 0) return;
+    const tokens = tokenRows.map((t) => t.token);
+    if (tokens.length === 0) return;
 
-    await messaging.sendEachForMulticast({
-      tokens: tokenList,
+    const result = await messaging.sendEachForMulticast({
+      tokens,
       notification: { title: params.title, body: params.body },
       data: params.data,
     });
+
+    // Cleanup invalid tokens
+    const invalidTokens: string[] = [];
+    result.responses.forEach((r, idx) => {
+      if (!r.success) {
+        const code = (r.error as any)?.code ?? '';
+        if (
+          code.includes('registration-token-not-registered') ||
+          code.includes('invalid-argument')
+        ) {
+          invalidTokens.push(tokens[idx]);
+        }
+      }
+    });
+
+    if (invalidTokens.length) {
+      await prisma.fCMToken.deleteMany({
+        where: { token: { in: invalidTokens } },
+      });
+    }
   }
 }

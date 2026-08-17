@@ -2,8 +2,6 @@ import { Router } from 'express';
 import { BookingController } from '../controllers/booking.controller';
 import { BookingValidator } from '../validators/booking.validator';
 import { validate } from '../middlewares/validate.middleware';
-import { authenticate } from '../middlewares/auth.middleware';
-import { authorize } from '../middlewares/role.middleware';
 
 const router = Router();
 
@@ -54,36 +52,7 @@ router.get(
   BookingController.getAvailableSlots
 );
 
-// ═══════════════════════════════════════════════════════════
-// PATIENT ROUTES (Booking)
-// ═══════════════════════════════════════════════════════════
-
-/**
- * @route   POST /api/v1/appointments
- * @desc    Book an appointment
- * @access  Private (Patient)
- */
-router.post(
-  '/appointments',
-  authenticate,
-  authorize('PATIENT'),
-  BookingValidator.bookAppointment(),
-  validate,
-  BookingController.bookAppointment
-);
-
-/**
- * @route   POST /api/v1/appointments/:id/reschedule
- * @desc    Reschedule an appointment
- * @access  Private (Patient)
- */
-router.post(
-  '/appointments/:id/reschedule',
-  authenticate,
-  authorize('PATIENT'),
-  BookingValidator.rescheduleAppointment(),
-  validate,
-  BookingController.rescheduleAppointment
-);
+// Note: appointment booking (POST /appointments, POST /appointments/:id/reschedule)
+// lives in appointments.routes.ts, mounted separately at /api/v1/appointments.
 
 export default router;

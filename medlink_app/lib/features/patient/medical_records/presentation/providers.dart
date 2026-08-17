@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io';
 import '../../../../core/network/dio_client.dart';
-import '../../../../shared/domain/entities/medical_record.dart';
+import '../../../shared/domain/entities/medical_record.dart';
 import '../data/repository_impl/medical_records_repository_impl.dart';
 import '../domain/repository/medical_records_repository.dart';
 

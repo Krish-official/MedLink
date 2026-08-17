@@ -1,25 +1,30 @@
+import dotenv from 'dotenv';
+// Load environment variables FIRST, before any other module (routes/services/config)
+// is imported — several of them read process.env at module-load time (e.g. JWT
+// secrets, Prisma client, Firebase config), so this must run before those requires.
+dotenv.config();
+
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
-import dotenv from 'dotenv';
-import { errorHandler } from './middlewares/error.middleware';
 import path from 'path';
+import { errorHandler } from './middlewares/error.middleware';
 // Import routes
 import authRoutes from './routes/auth.routes';
 import patientRoutes from './routes/patient.routes';
-import bookingRoutes from './routes/booking.routes';
+// Public doctor directory / search endpoints (GET /doctors, /doctors/:id, ...)
+import publicDoctorRoutes from './routes/booking.routes';
 import doctorRoutes from './routes/doctor.routes';
 import adminRoutes from './routes/admin.routes';
 import uploadRoutes from './routes/upload.routes';
-import doctorsRoutes from './routes/doctor.routes';
 import appointmentsRoutes from './routes/appointments.routes';
 import queueRoutes from './routes/queue.routes';
-dotenv.config();
 import notificationRoutes from './routes/notification.routes';
 
 const app: Application = express();
+const API_PREFIX = '/api/v1';
 
 // ═══════════════════════════════════════════════════════════
 // MIDDLEWARES
@@ -35,17 +40,16 @@ app.use(
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(compression());
-// Serve uploaded files (LOCAL driver)
-app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
-app.use(`${API_PREFIX}/uploads`, uploadRoutes);
-app.use(`${API_PREFIX}/queue`, queueRoutes);
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 } else {
   app.use(morgan('combined'));
 }
-app.use(`${API_PREFIX}/notifications`, notificationRoutes);
+
+// Serve uploaded files (LOCAL driver)
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
 // ═══════════════════════════════════════════════════════════
 // ROUTES
 // ═══════════════════════════════════════════════════════════
@@ -79,13 +83,15 @@ app.get('/health', (req: Request, res: Response) => {
 });
 
 // API Routes
-const API_PREFIX = '/api/v1';
 app.use(`${API_PREFIX}/auth`, authRoutes);
 app.use(`${API_PREFIX}/patient`, patientRoutes);
 app.use(`${API_PREFIX}/doctor`, doctorRoutes);
 app.use(`${API_PREFIX}/admin`, adminRoutes);
-app.use(`${API_PREFIX}/doctors`, doctorsRoutes);
+app.use(`${API_PREFIX}/doctors`, publicDoctorRoutes);
 app.use(`${API_PREFIX}/appointments`, appointmentsRoutes);
+app.use(`${API_PREFIX}/uploads`, uploadRoutes);
+app.use(`${API_PREFIX}/queue`, queueRoutes);
+app.use(`${API_PREFIX}/notifications`, notificationRoutes);
 
 // ═══════════════════════════════════════════════════════════
 // ERROR HANDLING

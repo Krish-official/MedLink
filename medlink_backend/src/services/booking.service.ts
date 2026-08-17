@@ -1,9 +1,8 @@
 import prisma from '../config/database';
 import { AppError } from '../middlewares/error.middleware';
 import { AppointmentType } from '@prisma/client';
-import { QueueService } from './queue.service';
-import { SocketService } from './socket.service';
 import { emitDoctorQueueSnapshot } from '../utils/queue-emit.util';
+import { safeUserSelect } from '../utils/prisma-select.util';
 export class BookingService {
   // ═══════════════════════════════════════════════════════════
   // SEARCH DOCTORS
@@ -258,12 +257,11 @@ export class BookingService {
     // TODO: Send confirmation notification
     // await NotificationService.sendAppointmentConfirmation(patientId, appointment);
 
+    await emitDoctorQueueSnapshot(appointment.doctorId, appointment.scheduledAt.toISOString());
+
     return appointment;
   }
-  await emitDoctorQueueSnapshot(appointment.doctorId, appointment.scheduledAt.toISOString());
-const dateKey = appointment.scheduledAt.toISOString().slice(0, 10);
-const snapshot = await QueueService.getDoctorQueueSnapshot(appointment.doctorId, appointment.scheduledAt.toISOString());
-SocketService.emitDoctorQueueUpdate(appointment.doctorId, dateKey, snapshot);
+
   // ═══════════════════════════════════════════════════════════
   // RESCHEDULE APPOINTMENT
   // ═══════════════════════════════════════════════════════════
@@ -289,7 +287,7 @@ SocketService.emitDoctorQueueUpdate(appointment.doctorId, dateKey, snapshot);
     }
 
     const scheduledAt = new Date(newScheduledAt);
-await emitDoctorQueueSnapshot(updatedAppointment.doctorId, updatedAppointment.scheduledAt.toISOString());
+
     // Check if new slot is available
     const existingAppointments = await prisma.appointment.count({
       where: {
@@ -319,6 +317,8 @@ await emitDoctorQueueSnapshot(updatedAppointment.doctorId, updatedAppointment.sc
         },
       },
     });
+
+    await emitDoctorQueueSnapshot(updatedAppointment.doctorId, updatedAppointment.scheduledAt.toISOString());
 
     return updatedAppointment;
   }

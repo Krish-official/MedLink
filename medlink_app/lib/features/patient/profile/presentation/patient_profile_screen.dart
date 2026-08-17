@@ -6,7 +6,7 @@ import '../../../../core/theme/tokens.dart';
 import '../../../../core/theme/typography.dart';
 import '../../../../core/widgets/buttons/primary_button.dart';
 import '../../../../core/widgets/buttons/destructive_button.dart';
-import '../../../auth/presentation/providers.dart';
+import '../../../auth/presentation/widgets/providers.dart';
 
 class PatientProfileScreen extends ConsumerWidget {
   const PatientProfileScreen({super.key});

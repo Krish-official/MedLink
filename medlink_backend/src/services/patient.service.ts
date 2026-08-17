@@ -1,6 +1,7 @@
 import prisma from '../config/database';
 import { AppError } from '../middlewares/error.middleware';
 import { AppointmentStatus, AppointmentType, RecordType } from '@prisma/client';
+import { safeUserSelect } from '../utils/prisma-select.util';
 
 export class PatientService {
   // ═══════════════════════════════════════════════════════════

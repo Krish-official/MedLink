@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { UserRole } from '@prisma/client';
 
 interface TokenPayload {
@@ -15,8 +15,10 @@ interface DecodedToken extends TokenPayload {
 export class TokenUtil {
   private static accessSecret = process.env.JWT_ACCESS_SECRET!;
   private static refreshSecret = process.env.JWT_REFRESH_SECRET!;
-  private static accessExpiry = process.env.JWT_ACCESS_EXPIRY || '15m';
-  private static refreshExpiry = process.env.JWT_REFRESH_EXPIRY || '7d';
+  private static accessExpiry: SignOptions['expiresIn'] =
+    (process.env.JWT_ACCESS_EXPIRY as SignOptions['expiresIn']) || '15m';
+  private static refreshExpiry: SignOptions['expiresIn'] =
+    (process.env.JWT_REFRESH_EXPIRY as SignOptions['expiresIn']) || '7d';
 
   static generateAccessToken(payload: TokenPayload): string {
     return jwt.sign(payload, this.accessSecret, {
