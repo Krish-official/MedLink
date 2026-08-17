@@ -17,6 +17,7 @@ import doctorsRoutes from './routes/doctor.routes';
 import appointmentsRoutes from './routes/appointments.routes';
 import queueRoutes from './routes/queue.routes';
 dotenv.config();
+import notificationRoutes from './routes/notification.routes';
 
 const app: Application = express();
 
@@ -44,7 +45,7 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   app.use(morgan('combined'));
 }
-
+app.use(`${API_PREFIX}/notifications`, notificationRoutes);
 // ═══════════════════════════════════════════════════════════
 // ROUTES
 // ═══════════════════════════════════════════════════════════

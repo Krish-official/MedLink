@@ -24,7 +24,7 @@ export class DoctorService {
       },
       include: {
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
       orderBy: { scheduledAt: 'asc' },
@@ -38,7 +38,7 @@ export class DoctorService {
       },
       include: {
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
     });
@@ -52,7 +52,7 @@ export class DoctorService {
       },
       include: {
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
       orderBy: { scheduledAt: 'asc' },
@@ -310,7 +310,7 @@ export class DoctorService {
         where,
         include: {
           patient: {
-            include: { user: true },
+            include: { user: { select: safeUserSelect } },
           },
         },
         orderBy: { scheduledAt: 'desc' },
@@ -373,7 +373,7 @@ export class DoctorService {
       data: { status: 'IN_PROGRESS' },
       include: {
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
     });
@@ -405,7 +405,7 @@ export class DoctorService {
       },
       include: {
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
     });
@@ -556,7 +556,7 @@ export class DoctorService {
         where,
         include: {
           patient: {
-            include: { user: true },
+            include: { user: { select: safeUserSelect } },
           },
           medications: true,
         },
@@ -596,7 +596,7 @@ export class DoctorService {
       include: {
         medications: true,
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
     });
@@ -612,7 +612,7 @@ export class DoctorService {
       },
       include: {
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
         medications: true,
       },
@@ -710,7 +710,7 @@ export class DoctorService {
       where: { doctorId },
       select: {
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
       distinct: ['patientId'],
@@ -851,7 +851,7 @@ export class DoctorService {
       },
       include: {
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
     });

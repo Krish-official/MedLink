@@ -2,6 +2,7 @@ import prisma from '../config/database';
 import { AppError } from '../middlewares/error.middleware';
 import bcrypt from 'bcryptjs';
 import { UserRole, AppointmentStatus } from '@prisma/client';
+import { safeUserSelect } from '../utils/prisma-select.util';
 
 export class AdminService {
   // ═══════════════════════════════════════════════════════════
@@ -89,10 +90,10 @@ export class AdminService {
         status: true,
         createdAt: true,
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
         doctor: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
       orderBy: { createdAt: 'desc' },
@@ -104,7 +105,7 @@ export class AdminService {
       where: { isActive: true },
       include: {
         patient: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
       orderBy: { createdAt: 'desc' },
@@ -203,7 +204,7 @@ export class AdminService {
           orderBy: { scheduledAt: 'desc' },
           include: {
             patient: {
-              include: { user: true },
+              include: { user: { select: safeUserSelect } },
             },
           },
         },
@@ -422,7 +423,7 @@ export class AdminService {
           orderBy: { scheduledAt: 'desc' },
           include: {
             doctor: {
-              include: { user: true },
+              include: { user: { select: safeUserSelect } },
             },
           },
         },
@@ -436,7 +437,7 @@ export class AdminService {
           include: {
             medications: true,
             doctor: {
-              include: { user: true },
+              include: { user: { select: safeUserSelect } },
             },
           },
         },
@@ -521,10 +522,10 @@ export class AdminService {
         where,
         include: {
           patient: {
-            include: { user: true },
+            include: { user: { select: safeUserSelect } },
           },
           doctor: {
-            include: { user: true },
+            include: { user: { select: safeUserSelect } },
           },
         },
         orderBy: { scheduledAt: 'desc' },
@@ -557,8 +558,8 @@ export class AdminService {
         ...(status === 'CANCELLED' && { cancelledAt: new Date() }),
       },
       include: {
-        patient: { include: { user: true } },
-        doctor: { include: { user: true } },
+        patient: { include: { user: { select: safeUserSelect } } },
+        doctor: { include: { user: { select: safeUserSelect } } },
       },
     });
 

@@ -20,7 +20,7 @@ export class QueueService {
         status: { in: ['SCHEDULED', 'CONFIRMED', 'IN_PROGRESS'] },
       },
       include: {
-        patient: { include: { user: true } },
+        patient: { include: { user: { select: safeUserSelect } } },
       },
       orderBy: [{ scheduledAt: 'asc' }, { createdAt: 'asc' }],
     });

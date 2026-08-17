@@ -3,6 +3,7 @@ import { AppError } from '../middlewares/error.middleware';
 import { AppointmentType } from '@prisma/client';
 import { QueueService } from './queue.service';
 import { SocketService } from './socket.service';
+import { emitDoctorQueueSnapshot } from '../utils/queue-emit.util';
 export class BookingService {
   // ═══════════════════════════════════════════════════════════
   // SEARCH DOCTORS
@@ -249,7 +250,7 @@ export class BookingService {
       },
       include: {
         doctor: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
     });
@@ -259,6 +260,7 @@ export class BookingService {
 
     return appointment;
   }
+  await emitDoctorQueueSnapshot(appointment.doctorId, appointment.scheduledAt.toISOString());
 const dateKey = appointment.scheduledAt.toISOString().slice(0, 10);
 const snapshot = await QueueService.getDoctorQueueSnapshot(appointment.doctorId, appointment.scheduledAt.toISOString());
 SocketService.emitDoctorQueueUpdate(appointment.doctorId, dateKey, snapshot);
@@ -287,7 +289,7 @@ SocketService.emitDoctorQueueUpdate(appointment.doctorId, dateKey, snapshot);
     }
 
     const scheduledAt = new Date(newScheduledAt);
-
+await emitDoctorQueueSnapshot(updatedAppointment.doctorId, updatedAppointment.scheduledAt.toISOString());
     // Check if new slot is available
     const existingAppointments = await prisma.appointment.count({
       where: {
@@ -313,7 +315,7 @@ SocketService.emitDoctorQueueUpdate(appointment.doctorId, dateKey, snapshot);
       },
       include: {
         doctor: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
     });

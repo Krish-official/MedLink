@@ -17,7 +17,7 @@ export class PatientService {
       },
       include: {
         doctor: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
       orderBy: { scheduledAt: 'asc' },
@@ -140,7 +140,7 @@ export class PatientService {
         where,
         include: {
           doctor: {
-            include: { user: true },
+            include: { user: { select: safeUserSelect } },
           },
           prescription: {
             include: { medications: true },
@@ -164,7 +164,7 @@ export class PatientService {
       },
       include: {
         doctor: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
         prescription: {
           include: { medications: true },
@@ -208,7 +208,7 @@ export class PatientService {
       },
       include: {
         doctor: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
       },
     });
@@ -304,7 +304,7 @@ export class PatientService {
         where: { patientId },
         include: {
           doctor: {
-            include: { user: true },
+            include: { user: { select: safeUserSelect } },
           },
           medications: true,
         },
@@ -326,7 +326,7 @@ export class PatientService {
       },
       include: {
         doctor: {
-          include: { user: true },
+          include: { user: { select: safeUserSelect } },
         },
         medications: true,
       },
