@@ -5,13 +5,14 @@ import compression from 'compression';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { errorHandler } from './middlewares/error.middleware';
-
+import path from 'path';
 // Import routes
 import authRoutes from './routes/auth.routes';
 import patientRoutes from './routes/patient.routes';
 import bookingRoutes from './routes/booking.routes';
 import doctorRoutes from './routes/doctor.routes';
 import adminRoutes from './routes/admin.routes';
+import uploadRoutes from './routes/upload.routes';
 
 dotenv.config();
 
@@ -31,6 +32,10 @@ app.use(
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(compression());
+// Serve uploaded files (LOCAL driver)
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+app.use(`${API_PREFIX}/uploads`, uploadRoutes);
+
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));

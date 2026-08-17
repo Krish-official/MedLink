@@ -14,7 +14,16 @@
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\""
   },
-  "keywords": ["healthcare", "medical", "api", "express", "prisma"],
+  "keywords": [
+    "healthcare",
+    "medical",
+    "api",
+    "express",
+    "prisma"
+  ],
   "author": "Your Name",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/lib-storage": "^3.1111.0"
+  }
 }
