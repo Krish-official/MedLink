@@ -15,7 +15,7 @@ import adminRoutes from './routes/admin.routes';
 import uploadRoutes from './routes/upload.routes';
 import doctorsRoutes from './routes/doctor.routes';
 import appointmentsRoutes from './routes/appointments.routes';
-
+import queueRoutes from './routes/queue.routes';
 dotenv.config();
 
 const app: Application = express();
@@ -37,7 +37,7 @@ app.use(compression());
 // Serve uploaded files (LOCAL driver)
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 app.use(`${API_PREFIX}/uploads`, uploadRoutes);
-
+app.use(`${API_PREFIX}/queue`, queueRoutes);
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));

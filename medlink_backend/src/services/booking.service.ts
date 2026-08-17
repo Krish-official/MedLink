@@ -1,7 +1,8 @@
 import prisma from '../config/database';
 import { AppError } from '../middlewares/error.middleware';
 import { AppointmentType } from '@prisma/client';
-
+import { QueueService } from './queue.service';
+import { SocketService } from './socket.service';
 export class BookingService {
   // ═══════════════════════════════════════════════════════════
   // SEARCH DOCTORS
@@ -258,7 +259,9 @@ export class BookingService {
 
     return appointment;
   }
-
+const dateKey = appointment.scheduledAt.toISOString().slice(0, 10);
+const snapshot = await QueueService.getDoctorQueueSnapshot(appointment.doctorId, appointment.scheduledAt.toISOString());
+SocketService.emitDoctorQueueUpdate(appointment.doctorId, dateKey, snapshot);
   // ═══════════════════════════════════════════════════════════
   // RESCHEDULE APPOINTMENT
   // ═══════════════════════════════════════════════════════════
